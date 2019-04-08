@@ -1,0 +1,497 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Calendar</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    
+<style>
+    p{
+        font-size:12px;
+    }
+    h2{font-size:15px;}
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: helvetica;
+  padding: 10px;
+  background: #f1f1f1;
+}
+button {
+  background-color: #ffb448;
+  color: black;
+  padding: 14px 20px;
+  margin: 8px 2px;
+  border: none;
+  cursor: pointer;
+  width: 50%;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+/* Header/Blog Title */
+.header {
+  padding: 20px;
+  text-align: center;
+  background: gainsboro;
+
+}
+
+.header h1 {
+  font-size: 50px;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+
+.topnav a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change color on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+
+.leftcolumn {   
+  float: left;
+  width: 75%;
+}
+
+/* Right column */
+.rightcolumn {
+  float: left;
+  width: 25%;
+  background-color: #f1f1f1;
+  padding-left: 20px;
+}
+
+.card {
+  background-color: white;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Footer */
+.footer {
+  padding: 10px;
+  text-align: center;
+  background: #ddd;
+  margin-top: 20px;
+}
+
+.month {
+  padding: 20px 25px;
+  width: 100%;
+  background: #f2c24b;
+  text-align: center;
+}
+
+.month ul {
+  margin: 0;
+  padding: 0;
+}
+li:hover {background-color:#E79E29;}
+
+.month ul li {
+  color: white;
+  font-size: 20px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+.month .prev {
+  float: left;
+  padding-top: 10px;
+}
+
+.month .next {
+  float: right;
+  padding-top: 10px;
+}
+
+.weekdays {
+  margin: 0;
+  padding: 10px 0;
+  background-color: #ddd;
+}
+
+.weekdays li {
+  display: inline-block;
+  width: 13.6%;
+  color: #666;
+  text-align: center;
+}
+
+.days {
+  padding: 10px 0;
+  background: #eee;
+  margin: 0;
+}
+
+.days li {
+  list-style-type: none;
+  display: inline-block;
+  width: 13.6%;
+  text-align: center;
+  margin-bottom: 5px;
+  font-size:12px;
+  color: #777;
+}
+table {
+  border-collapse: collapse;
+  width: 100px;
+  height: 40px;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+td{
+    font-size: 10px;
+}
+th{
+    font-size: 14px;
+}
+
+tr:hover {background-color:#f5f5f5;}
+
+
+/* Add media queries for smaller screens */
+@media screen and (max-width:720px) {
+  .weekdays li, .days li {width: 13.1%;}
+}
+
+@media screen and (max-width: 420px) {
+  .weekdays li, .days li {width: 12.5%;}
+  .days li .active {padding: 2px;}
+}
+
+@media screen and (max-width: 290px) {
+  .weekdays li, .days li {width: 12.2%;}
+}
+
+/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 800px) {
+  .leftcolumn, .rightcolumn {   
+    width: 100%;
+    padding: 0;
+  }
+}
+
+/* Responsive layout - when the screen is less than 400px wide, make the navigation links stack on top of each other instead of next to each other */
+@media screen and (max-width: 400px) {
+  .topnav a {
+    float: none;
+    width: 100%;
+  }
+}
+
+</style>
+</head>
+<body>
+<div class="container col-sm-4 col-md-7 col-lg-4 mt-5">
+    <div class="card">
+        <h3 class="card-header" id="monthAndYear"></h3>
+        <table class="table table-bordered table-responsive-sm" id="calendar">
+            <thead>
+            <tr>
+                <th>Sun</th>
+                <th>Mon</th>
+                <th>Tue</th>
+                <th>Wed</th>
+                <th>Thu</th>
+                <th>Fri</th>
+                <th>Sat</th>
+            </tr>
+            </thead>
+
+            <tbody id="calendar-body">
+
+            </tbody>
+        </table>
+      
+        <div class="form-inline">
+
+            <button class="btn btn-outline-primary col-sm-6" id="previous" onclick="previous()">Előző</button>
+
+            <button class="btn btn-outline-primary col-sm-6" id="next" onclick="next()">Következő</button>
+        </div>
+        <br/>
+        <form class="form-inline">
+            <label class="lead mr-2 ml-2" for="month">Ugrás: </label>
+            <select class="form-control col-sm-4" name="month" id="month" onchange="jump()">
+                <option value=0>Jan</option>
+                <option value=1>Feb</option>
+                <option value=2>Mar</option>
+                <option value=3>Apr</option>
+                <option value=4>May</option>
+                <option value=5>Jun</option>
+                <option value=6>Jul</option>
+                <option value=7>Aug</option>
+                <option value=8>Sep</option>
+                <option value=9>Oct</option>
+                <option value=10>Nov</option>
+                <option value=11>Dec</option>
+            </select>
+
+
+            <label for="year"></label><select class="form-control col-sm-4" name="year" id="year" onchange="jump()">
+            <option value=1990>1990</option>
+            <option value=1991>1991</option>
+            <option value=1992>1992</option>
+            <option value=1993>1993</option>
+            <option value=1994>1994</option>
+            <option value=1995>1995</option>
+            <option value=1996>1996</option>
+            <option value=1997>1997</option>
+            <option value=1998>1998</option>
+            <option value=1999>1999</option>
+            <option value=2000>2000</option>
+            <option value=2001>2001</option>
+            <option value=2002>2002</option>
+            <option value=2003>2003</option>
+            <option value=2004>2004</option>
+            <option value=2005>2005</option>
+            <option value=2006>2006</option>
+            <option value=2007>2007</option>
+            <option value=2008>2008</option>
+            <option value=2009>2009</option>
+            <option value=2010>2010</option>
+            <option value=2011>2011</option>
+            <option value=2012>2012</option>
+            <option value=2013>2013</option>
+            <option value=2014>2014</option>
+            <option value=2015>2015</option>
+            <option value=2016>2016</option>
+            <option value=2017>2017</option>
+            <option value=2018>2018</option>
+            <option value=2019>2019</option>
+            <option value=2020>2020</option>
+            <option value=2021>2021</option>
+            <option value=2022>2022</option>
+            <option value=2023>2023</option>
+            <option value=2024>2024</option>
+            <option value=2025>2025</option>
+            <option value=2026>2026</option>
+            <option value=2027>2027</option>
+            <option value=2028>2028</option>
+            <option value=2029>2029</option>
+            <option value=2030>2030</option>
+        </select></form>
+    </div>
+    
+    <div class="footer">
+    
+     <input  type="submit" value="Összesít" onclick="OnChange()"/>
+     
+</div>
+    <div class="card">
+    <table>
+      <tr> Összesített távollét</tr>
+      <tr>
+         <th  title="Fizetett tárgyévi szabadság">F </th>
+        <th  title="Fizetett előző évi szabadság">E</th>
+        <th  title="Tanulmányi szabadság">T</th>
+        <th  title="Jutalomszabadság">J</th>
+        <th title="Fizetés nélküli igazolt távollét">I</th>
+        <th title="Betegség">B</th>
+        <th title="Igazolatlan távollét">H</th>
+      </tr>
+      <tr>
+        <td id="F">0</td>
+        <td id="E">0</td>
+        <td id="T">0</td>
+        <td id="J">3</td>
+        <td id="I" >0</td>
+        <td id="B" >0</td>
+        <td  id="H">0</td>
+      </tr>
+    </table>
+    </div>
+</div> 
+
+<script>
+
+today = new Date();
+currentMonth = today.getMonth();
+currentYear = today.getFullYear();
+selectYear = document.getElementById("year");
+selectMonth = document.getElementById("month");
+
+months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+monthAndYear = document.getElementById("monthAndYear");
+showCalendar(currentMonth, currentYear);
+
+
+function next() {
+    currentYear = (currentMonth === 11) ? currentYear + 1 : currentYear;
+    currentMonth = (currentMonth + 1) % 12;
+    showCalendar(currentMonth, currentYear);
+}
+
+function previous() {
+    currentYear = (currentMonth === 0) ? currentYear - 1 : currentYear;
+    currentMonth = (currentMonth === 0) ? 11 : currentMonth - 1;
+    showCalendar(currentMonth, currentYear);
+}
+
+function jump() {
+    currentYear = parseInt(selectYear.value);
+    currentMonth = parseInt(selectMonth.value);
+    showCalendar(currentMonth, currentYear);
+}
+
+function showCalendar(month, year) {
+
+    let firstDay = (new Date(year, month)).getDay();
+
+    tbl = document.getElementById("calendar-body"); // body of the calendar
+
+    // clearing all previous cells
+    tbl.innerHTML = "";
+
+    // filing data about month and in the page via DOM.
+    monthAndYear.innerHTML = months[month] + " " + year;
+    selectYear.value = year;
+    selectMonth.value = month;
+
+    // creating all cells
+    let date = 1;
+    for (let i = 0; i < 6; i++) {
+        // creates a table row
+        let row = document.createElement("tr");
+
+        //creating individual cells, filing them up with data.
+        for (let j = 0; j < 7; j++) {
+            if (i === 0 && j < firstDay) {
+                cell = document.createElement("td");
+                cellText = document.createTextNode("");
+                cell.appendChild(cellText);
+                row.appendChild(cell);
+            }
+            else if (date > daysInMonth(month, year)) {
+                break;
+            }
+
+            else {
+           
+                 var sel = document.createElement('select');
+                  sel.name="select1";
+                  sel.id = 'form1';
+                  sel.action="" ;
+                  sel.method="post";
+                  sel.selected="selected";
+                  
+                  
+                  var opt1 = document.createElement("option");
+                    var opt2 = document.createElement("option");
+                    var opt3=document.createElement("option");
+                    var opt4=document.createElement("option");
+                    var opt5=document.createElement("option");
+                    var opt6=document.createElement("option");
+                    var opt7=document.createElement("option");
+                    var opt8=document.createElement("option");
+                    opt1.value = "0";
+                    opt1.text = date;
+                    opt2.value = "1";
+                    opt2.name="fiz";
+                    opt2.text = "F";
+                    opt2.id="Fiz";
+                    opt3.value = "1";
+                    opt3.text = "E";
+                    opt3.id="El";
+                    opt4.value = "1";
+                    opt4.text = "T";
+                    opt4.id="Tan";
+                    opt5.value = "1";
+                    opt5.text = "J";
+                    opt5.id="Jut";
+                    opt6.value = "1";
+                    opt6.text = "I";
+                    opt6.id="Ig";
+                    opt7.value = "1";
+                    opt7.text = "B";
+                    opt7.id="Bet";
+                    opt8.value = "1";
+                    opt8.text = "H";
+                    opt8.id="Hig";
+                    sel.add(opt1, null);
+                    sel.add(opt2, null);
+                    sel.add(opt3, null);
+                    sel.add(opt4, null);
+                    sel.add(opt5, null);
+                    sel.add(opt6, null);
+                    sel.add(opt7, null);
+                   sel.add(opt8, null); 
+                    
+                cell = document.createElement("td");
+                cellText = document.createTextNode(date);
+                if (date === today.getDate() && year === today.getFullYear() && month === today.getMonth()) {
+                    cell.classList.add("bg-info");
+                } // color today's date
+                cell.appendChild(sel);
+                row.appendChild(cell);
+                date++;
+            }
+        }
+        tbl.appendChild(row); // appending each row into calendar body.
+    }
+}
+
+ function getSelectValues(select) {
+  var result = 0;
+  var options = select && select.options;
+  var opt;
+
+  for (var i=0, iLen=options.length; i<iLen; i++) {
+    opt = options[i];
+
+    if (opt.selected) {
+      result.push(opt.value || opt.text);
+    }
+  }
+  document.getElementById('F').innerHTML = result;
+}
+
+function OnChange(){
+                var sum = 0;
+                sum +=parseInt(form1.select1.value);
+                document.getElementById('F').innerHTML = sum;
+            }
+    // check how many days in a month code from https://dzone.com/articles/determining-number-days-month
+function daysInMonth(iMonth, iYear) {
+    return 32 - new Date(iYear, iMonth, 32).getDate();
+}
+
+</script>
+
+</body>
+</html>
