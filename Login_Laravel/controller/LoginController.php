@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Validator;
 use Auth;
 
@@ -24,9 +25,11 @@ class LoginController extends Controller
       'password' => $request->post('password')
      );
 
-     if(Auth::attempt($user_data))
+     $user = DB::table('users')->where('email', $request->post('email'))->first();
+
+     if(Auth::attempt($user_data) && $user !==null && !$user->inactive)
      {
-      return redirect('main/successlogin');
+      return redirect('/successlogin');
      }
      else
      {
@@ -43,6 +46,10 @@ class LoginController extends Controller
     function logout()
     {
      Auth::logout();
-     return redirect('main');
+     return redirect('/');
+    }
+
+    function my(){
+        return view('usermod', ['user' => Auth::user(), 'my' => true]);
     }
 }

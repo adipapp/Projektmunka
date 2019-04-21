@@ -11,23 +11,24 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 
-Route::get('/my', function () {
-    return "HELLOKA";
-});
+// Route::get('/my', function () {
+//     return "HELLOKA";
+// });
 
-Route::get('/main', 'LoginController@index');
-Route::post('/main/checklogin', 'LoginController@checklogin');
-Route::get('main/successlogin', 'LoginController@successlogin');
-Route::get('main/logout', 'LoginController@logout');
-Route::get('/main/reg', 'RegistrationController@index');
-Route::post('/main/reg/store', 'RegistrationController@store');
-Route::get('/main/userlist', 'UserlistController@list');
-#Route::get('/main/delete', 'UserlistController@delete');
-Route::get('/main/delete', ['as' => 'deleteuser', 'uses' => 'UserlistController@delete']);
-Route::post('/main/modify/mod', ['as' => 'modifyuser', 'uses' => 'UserlistController@modify']);
-Route::get('/main/modify/show', ['as' => 'modifyusershow', 'uses' => 'UserlistController@show']);
+Route::get('/', 'LoginController@index');
+Route::get('/my', 'LoginController@my');
+Route::post('/checklogin', 'LoginController@checklogin');
+Route::get('/successlogin', 'LoginController@successlogin');
+Route::get('/logout', 'LoginController@logout');
+Route::get('/reg', 'RegistrationController@index');
+Route::post('/reg/store', 'RegistrationController@store');
+Route::get('/userlist', 'UserlistController@list');
+Route::post('/delete', ['as' => 'deleteuser', 'uses' => 'UserlistController@delete']);
+Route::get('/delete/verify', ['as' => 'deleteverify', 'uses' => 'UserlistController@verify']);
+Route::post('/modify/mod', ['as' => 'modifyuser', 'uses' => 'UserlistController@modify']);
+Route::get('/modify/show', ['as' => 'modifyusershow', 'uses' => 'UserlistController@show']);

@@ -14,9 +14,19 @@ class UserlistController extends Controller
     }
 
     function delete(Request $request){
-    	DB::table('users')->where('id', $request->get('id'))->delete();
-        return redirect('/main/userlist');
+        if($request->post('whattodo')=='permdel'){
+    	   DB::table('users')->where('id', $request->post('id'))->delete();
+        }
+        else if($request->post('whattodo')=='inact'){
+            DB::table('users')->where('id', $request->post('id'))->update(['inactive' => true]);
+        }
+        return redirect('/userlist');
     }
+
+    function verify(Request $request){
+        return view('deluser', ['user' => $request->get('user')]);
+    }
+
 
     function show(Request $request){
     	return view('usermod', ['user' => $request->get('user')]);
@@ -33,6 +43,32 @@ class UserlistController extends Controller
     	if($request->get('password') != ''){
     		DB::table('users')->where('id', $request->post('id'))->update(['password' => Hash::make($request->post('password'))]);
     	}
-    	return redirect('/main/userlist');
+        if($request->get('my')===null){
+        if($user->szabit_kiirhat && $request->post('szabit_kiirhat') === null){
+            DB::table('users')->where('id', $request->post('id'))->update(['szabit_kiirhat' => false]);
+        }
+        else if(!$user->szabit_kiirhat && $request->post('szabit_kiirhat') !== null){
+            DB::table('users')->where('id', $request->post('id'))->update(['szabit_kiirhat' => true]);
+        }
+        if($user->biralhat && $request->post('biralhat') === null){
+            DB::table('users')->where('id', $request->post('id'))->update(['biralhat' => false]);
+        }
+        else if(!$user->biralhat && $request->post('biralhat') !== null){
+            DB::table('users')->where('id', $request->post('id'))->update(['biralhat' => true]);
+        }
+        if($user->inactive && $request->post('inactive') === null){
+            DB::table('users')->where('id', $request->post('id'))->update(['inactive' => false]);
+        }
+        else if(!$user->inactive && $request->post('inactive') !== null){
+            DB::table('users')->where('id', $request->post('id'))->update(['inactive' => true]);
+        }
+        if($user->adatot_modosithat && $request->post('adatot_modosithat') === null){
+            DB::table('users')->where('id', $request->post('id'))->update(['adatot_modosithat' => false]);
+        }
+        else if(!$user->adatot_modosithat && $request->post('adatot_modosithat') !== null){
+            DB::table('users')->where('id', $request->post('id'))->update(['adatot_modosithat' => true]);
+        }
+        }        
+    	return redirect('/userlist');
     }
 }
