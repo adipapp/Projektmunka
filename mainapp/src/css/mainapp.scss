@@ -1,0 +1,94 @@
+body {
+  background-color: #f1f1f1;
+  padding: 20px;
+  margin: 0;
+}
+h1, h2, p, ul, li {
+  font-family: sans-serif;
+}
+.mainheader{
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+
+}
+ul.header li {
+  display: inline;
+  list-style-type: none;
+  margin: 0;
+}
+ul.header {
+  background-color: #111;
+  padding: 0;
+}
+ul.header li a {
+  color: #FFF;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 20px;
+  display: inline-block;
+}
+.content {
+  background-color: #FFF;
+  padding: 20px;
+}
+.content h2 {
+  padding: 0;
+  margin: 0;
+}
+.content li {
+  margin-bottom: 10px;
+}
+
+.active {
+  background-color: #0099FF;
+}
+
+.button{
+  background-color: gainsboro;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  float: left;
+}
+.topheader {
+  padding: 30px;
+  text-align: left;
+  background: gainsboro;
+}
+
+.leftcolumn {
+  float: left;
+  width: 70%;
+}
+/* Right column */
+.rightcolumn {
+  float: right;
+  width: 25%;
+  background-color: #f1f1f1;
+  padding-left: 20px;
+}
+.card {
+  background-color: white;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.rightcard{
+  background-color: white;
+  padding: 10px;
+  margin-top: 10px;
+  float:right;
+  width: 25%;
+}
+
+.szarwidth{
+  width:75%;
+}

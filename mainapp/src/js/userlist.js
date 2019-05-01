@@ -1,0 +1,28 @@
+const userlist = [
+    {
+        userId: 1,
+        name: "Tanszéki Ügyintéző",
+        email: "tsz.ui@sze.hu",
+        dateCreated: "2019-04-22 19:05:21",
+        dateModified: "2019-04-22 19:05:21",
+        inactive: false,
+        superuser: true,
+        biralhat: true,
+        szabit_kiirhat: true,
+        adatot_modosithat: true,
+        orarend_felelos: true,
+    },
+    {
+        userId: 2,
+        name: "Tanszéki Ügyintéző2",
+        email: "tsz.ui2@sze.hu",
+        dateCreated: "2019-04-22 19:05:21",
+        dateModified: "2019-04-22 19:05:21",
+        inactive: false,
+        superuser: true,
+        biralhat: true,
+        szabit_kiirhat: true,
+        adatot_modosithat: true,
+        orarend_felelos: true,
+    },
+];
