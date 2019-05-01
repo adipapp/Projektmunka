@@ -15,7 +15,7 @@ $user = (object) [
 <!DOCTYPE html>
 <html>
 	<head>
-		<link rel="stylesheet" href="css/calendar.css">
+		<link rel="stylesheet" href="../build/css/calendar.css">
 		<link rel="shortcut icon" href="">
 		<title>
 			Naptár
@@ -28,7 +28,7 @@ $user = (object) [
 	</script>
 	<body>
 		<div id="root">
-			<script type="text/javascript" src="main.bundle.js"></script>
+			<script type="text/javascript" src="../build/main.bundle.js"></script>
 		</div>
 	</body>
 </html>
