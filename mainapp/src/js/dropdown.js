@@ -26,7 +26,6 @@ class Dropdown extends React.Component{
         this.props.selectionChanged(this.props.index, this.getSelectedItemByValue(this.props.options, e.target.value));
     }
     getSelectedItemByValue(options, value){
-        let option = null;
         for(let i = 0; i < options.length; i++){
             if ("options" in options[i]){
                 const tempOption = this.getSelectedItemByValue(options[i].options, value);
@@ -40,18 +39,27 @@ class Dropdown extends React.Component{
                 }
             }
         }
-        return option;
+        return options[0];
     }
     render(){
+        let bgColor;
+        if (this.props.approved == 1){
+            bgColor = "#90ee90";
+        } else if (this.props.approved == 0){
+            bgColor = "#ffff90";
+        }
+        else if (this.props.approved == 2){
+            bgColor = "#ff594f"
+        }
         if (this.props.disabled) {
             return(
-                <select disabled className="form-control" id={this.props.index} onChange={this.handleChange.bind(this)} value={this.props.selected.value} key={"dropdown" + this.props.index}>
+                <select disabled style={{backgroundColor: bgColor}} className="form-control" id={this.props.index} onChange={this.handleChange.bind(this)} value={this.props.selected.value} key={"dropdown" + this.props.index}>
                     {this.renderOptions(this.props.options)}
                 </select>
             );
         }
         return(
-            <select className="form-control" id={this.props.index} onChange={this.handleChange.bind(this)} value={this.props.selected.value} key={"dropdown" + this.props.index}>
+            <select className="form-control" style={{backgroundColor: bgColor}} id={this.props.index} onChange={this.handleChange.bind(this)} value={this.props.selected.value} key={"dropdown" + this.props.index}>
                 {this.renderOptions(this.props.options)}
             </select>
         );

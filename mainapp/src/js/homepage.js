@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 
-var d=new Date();
+const d = new Date();
 const remainingdays=Math.abs(10-(d.getDate()));
 
 class Homepage extends Component{
@@ -19,7 +19,6 @@ class Homepage extends Component{
                 </div>
                 <div className="rightcard">
                     <div className="card">Közelgő esemény</div>
-                    <h2>{this.props.name}</h2>
                 </div>
             </div>
 

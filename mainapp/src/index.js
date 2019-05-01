@@ -29,31 +29,11 @@ const Views = {
     HOLIDAY: 2,
     HOLIDAYAPPROVE: 3,
 };
+function dateToString(date){
+    return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+}
 var CurrentView;
-const dropdownOptions = [
-    {label: "Válassz", value: 0},
-    {
-        label: "Szabadság",
-        options: [
-            {label: "F", value: 1},
-            {label: "E", value: 2},
-            {label: "T", value: 3},
-            {label: "J", value: 4},
-            {label: "I", value: 5},
-            {label: "B", value: 6},
-            {label: "H", value: 7},
-            {label: "A", value: 8}
-        ]
-    },
-    {
-        label: "Utazás",
-        options: [
-            {label: "E", value: 9},
-            {label: "EE", value: 10},
-            {label: "K", value: 11},
-        ]
-    }
-];
+
 function getISODayNumber(dt) {
     return (dt.getDay() === 0 ? 6 : dt.getDay()-1);
 }
@@ -68,15 +48,14 @@ class Main extends React.Component{
         super();
     }
     componentDidMount(){
-        console.log(userData);
-        console.log(userData.user);
+
     }
     render(){
         return(
             <HashRouter>
                 <div className="topheader">
                     <div >
-                        Széchenyi István Egyetem - Űrlapok {userData.user.name}
+                        Széchenyi István Egyetem
                     </div>
                 </div>
                 <div>
@@ -87,8 +66,8 @@ class Main extends React.Component{
                         <li><NavLink to ="#">Saját adatok módosítása</NavLink></li>
                         <li><NavLink to ="#" style={{float:'right'}}>kilépés</NavLink></li>
                     </ul>
-                    <Route exact path ="/" component={Homepage}/>
-                    <Route path ="/asd" component={Calendar}/>
+                    <Route exact path ="/" component={() => <Homepage name={userData.user.name}/>}/>
+                    <Route path ="/asd" component={() => <Calendar user={userData}/>}/>
                 </div>
             </HashRouter>
         );
