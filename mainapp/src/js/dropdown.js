@@ -39,7 +39,7 @@ class Dropdown extends React.Component{
                 }
             }
         }
-        return options[0];
+        return null;
     }
     render(){
         let bgColor;

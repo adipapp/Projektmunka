@@ -1,13 +1,14 @@
 import React from 'react';
 import $ from 'jquery';
 import Dropdown from './dropdown.js';
-import Cando from './privileges.js';
+import {CanDo, Actions, TargetUser, SetTargetUser} from './privileges.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'jquery/dist/jquery.min.js';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import '../css/calendar.scss'
 
 import userData from 'userData';
+
 
 const dropdownOptions = [
     {label: "Válassz", value: 0},
@@ -78,7 +79,7 @@ function getSelectedItemByValue(options, value){
             }
         }
     }
-    return options[0];
+    return null;
 }
 class CalendarElement extends React.Component{
     isDayDisabled(){
@@ -87,8 +88,17 @@ class CalendarElement extends React.Component{
         }
         return false;
     }
+    handleCostChange(e){
+        this.props.costChanged(this.props.index, e.target.value);
+    }
     render(){
         const disabled = this.isDayDisabled();
+        let isTravel = false;
+        for (let i = 0; i < dropdownOptions[2].options.length; i++){
+            if (dropdownOptions[2].options[i] == this.props.selected.option) {
+                isTravel = true;
+            }
+        }
         return(
             <div className={disabled ? "calendar-day font-grey" : "calendar-day"}>
                 <div className="calendar-day-number">{this.props.actualDate.getDate()}</div>
@@ -99,6 +109,7 @@ class CalendarElement extends React.Component{
                     selectionChanged={(index, data) =>this.props.selectionChanged(index, data)}
                     selected={this.props.selected.option}
                     approved={this.props.selected.approved}/>
+                {isTravel ? <input type="number" className="form-control" value={this.props.selected.cost} onChange={this.handleCostChange.bind(this)}/> : ""}
             </div>
         );
     }
@@ -112,7 +123,7 @@ const exampleState = {
 };
 class Calendar extends React.Component{
     constructor(props){
-        super(props);
+        super(props);7
         let sd = getRoundedDate(new Date());
         sd.setDate(1);
         let cfd = getRoundedDate(new Date(sd));
@@ -148,20 +159,28 @@ class Calendar extends React.Component{
                     key={'calendar-element-' + i}
                     selected={this.state.selectedStates[i]}
                     selectionChanged={(index, data) => this.selectionChanged(index, data)}
+                    costChanged={(index, data) => this.handleCostChange(index, data)}
                 />
             );
             d.setDate(d.getDate()+1);
         }
         return dayDivs;
     }
+    handleCostChange(index, value){
+        const state = this.state.selectedStates.slice();
+        state[index].cost = value;
+        this.setState({selectedStates: state});
+    }
     selectionChanged(index, value){
         const state = this.state.selectedStates.slice();
         state[index].option = value;
         if (value == dropdownOptions[0]){
             state[index].approved = null;
+            state[index].cost = 0;
         }
         else if (this.state.originalState[index].option == value && value != dropdownOptions[0]){
             state[index].approved = this.state.originalState[index].approved;
+            state[index].cost = this.state.originalState[index].cost;
         }
         else if (value != dropdownOptions[0]){
             state[index].approved = 0;
@@ -229,9 +248,9 @@ class Calendar extends React.Component{
     loadData(date){
         let endDate = new Date(date);
         endDate.setDate(endDate.getDate() + 42);
-        let targetUser;
-        if (this.props.targetUser != undefined){
-            targetUser = this.props.targetUser;
+        let targetUser = null;
+        if (this.props.targetUser != null && CanDo(Actions.APPROVE_HOLIDAY) || CanDo(Actions.MODIFY_OTHERS_HOLIDAY)){
+            targetUser = TargetUser;
         }
         else{
             let targetUser = userData;
@@ -342,7 +361,7 @@ class Calendar extends React.Component{
                         <button type="button" className="btn btn-secondary" onClick={() => this.monthChange("right")}>-&gt;</button>
                     </div>
                     <div >
-
+                        
                     </div>
                     <div className="calendar-header-center">{this.state.selectedDate.getFullYear()+ " " + months[this.state.selectedDate.getMonth()]}</div>
                     <div>

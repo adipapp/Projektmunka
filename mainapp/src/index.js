@@ -27,8 +27,6 @@ function GetUserData(){
 
 }
 
-var targetUser = null;
-
 class Main extends React.Component{
     constructor(){
         super();
@@ -43,10 +41,6 @@ class Main extends React.Component{
     render(){
         let navlinks = [];
         let routes = [];
-        if (CanDo(Actions.APPROVE_HOLIDAY)){
-            navlinks.push(<li><NavLink to ="/ApproveList">Jóváhagyás</NavLink></li>);
-            routes.push(<Route exact path ="/ApproveList" component={<div/>}/>);
-        }
         if (CanDo(Actions.LIST_USERS)){
             navlinks.push(<li><NavLink to ="/UserList">Felhasználók kezelése</NavLink></li>);
             routes.push(<Route path ="/UserList" component={() => <UserList/>}/>);
@@ -67,7 +61,7 @@ class Main extends React.Component{
                         <li><NavLink to ="#" style={{float:'right'}}>Kilépés</NavLink></li>
                     </ul>
                     <Route exact path ="/" component={() => <Homepage name={userData.user.name}/>}/>
-                    <Route path ="/Holiday" component={() => <Calendar targetUser={targetUser}/>}/>
+                    <Route path ="/Holiday" component={() => <Calendar/>}/>
                     {routes}
                 </div>
             </HashRouter>

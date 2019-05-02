@@ -7,6 +7,13 @@ const Privileges = {
     ADATOT_MODOSITHAT: [1,2,3,4],
     ORAREND_FELELOS: [],
 };
+
+export var TargetUser = null;
+
+export function SetTargetUser(object) {
+    TargetUser = object;
+}
+
 export const Actions = {
     MODIFY_USER: 1,
     DELETE_USER: 2,

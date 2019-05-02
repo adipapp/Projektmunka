@@ -1,12 +1,20 @@
 import React from 'react';
 import $ from 'jquery';
+import {Redirect} from 'react-router-dom';
 import {Modal, Button} from 'react-bootstrap';
-import {CanDo, Actions} from "./privileges";
+import {CanDo, Actions, TargetUser, SetTargetUser} from "./privileges";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'jquery/dist/jquery.min.js';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
+
 import userData from 'userData';
+import Calendar from "./calendar";
+
+library.add(faCalendarAlt);
 
 const userlist = [
     {
@@ -60,7 +68,7 @@ const userSpacer = {
 class UserList extends React.Component{
     constructor(props){
         super(props);
-        this.state = {showDeleteModal: false, showModifyModal: false, showNewModal: false, selectedUser: userSpacer, users: [userSpacer,], originalUsers: [userSpacer,]};
+        this.state = {showDeleteModal: false, showModifyModal: false, showNewModal: false, selectedUser: userSpacer, users: [userSpacer,], originalUsers: [userSpacer,], redirect: false,};
     }
     componentDidMount(){
         this.loadData()
@@ -231,10 +239,14 @@ class UserList extends React.Component{
         user.password = e.target.value;
         this.setState({selectedUser: user});
     }
-    handleCalendarClick(){
-
+    handleCalendarClick(user){
+        SetTargetUser(user);
+        this.setState({redirect:true});
     }
     render(){
+        if (this.state.redirect){
+            return <Redirect to="/Holiday" />
+        }
         return(
             <React.Fragment>
                 <div>
@@ -242,32 +254,32 @@ class UserList extends React.Component{
                 </div>
                 <table className="table table-hover">
                     <tr>
-                        {CanDo(Actions.MODIFY_USER || Actions.DELETE_USER) ? <th scope="col">ID</th> : ""}
-                        <th scope="col">Név</th>
-                        <th scope="col">Email</th>
-                        {CanDo(Actions.MODIFY_OTHERS_HOLIDAY || Actions.APPROVE_HOLIDAY) ? <th scope="col"><i className="fas fa-calendar-alt">Naptár</i></th> : ""}
-                        {CanDo(Actions.MODIFY_USER || Actions.DELETE_USER) ? <th scope="col">Létrehozva</th> : ""}
-                        {CanDo(Actions.MODIFY_USER || Actions.DELETE_USER) ? <th scope="col">Módosítva</th> : ""}
-                        {CanDo(Actions.MODIFY_USER || Actions.DELETE_USER) ? <th scope="col">Szabdságot kiírhat?</th> : ""}
-                        {CanDo(Actions.MODIFY_USER || Actions.DELETE_USER) ? <th scope="col">Szabadságot bírálhat?</th> : ""}
-                        {CanDo(Actions.MODIFY_USER || Actions.DELETE_USER) ? <th scope="col">Más adatát módosíthatja?</th> : ""}
-                        {CanDo(Actions.MODIFY_USER || Actions.DELETE_USER) ?  <th scope="col">Órarend felelős?</th> : ""}
-                        {CanDo(Actions.MODIFY_USER) ? <th scope="col"></th> : ""}
-                        {CanDo(Actions.DELETE_USER) ? <th scope="col"></th> : ""}
+                        {CanDo(Actions.MODIFY_USER) || CanDo(Actions.DELETE_USER) ? <th className="text-center" scope="col">ID</th> : ""}
+                        <th className="text-center" scope="col">Név</th>
+                        <th className="text-center" scope="col">Email</th>
+                        {CanDo(Actions.MODIFY_OTHERS_HOLIDAY) || CanDo(Actions.APPROVE_HOLIDAY) ? <th className="text-center" scope="col">Naptár</th> : ""}
+                        {CanDo(Actions.MODIFY_USER) || CanDo(Actions.DELETE_USER) ? <th className="text-center" scope="col">Létrehozva</th> : ""}
+                        {CanDo(Actions.MODIFY_USER) || CanDo(Actions.DELETE_USER) ? <th className="text-center" scope="col">Módosítva</th> : ""}
+                        {CanDo(Actions.MODIFY_USER) || CanDo(Actions.DELETE_USER) ? <th className="text-center" scope="col">Szabdságot kiírhat?</th> : ""}
+                        {CanDo(Actions.MODIFY_USER) || CanDo(Actions.DELETE_USER) ? <th className="text-center" scope="col">Szabadságot bírálhat?</th> : ""}
+                        {CanDo(Actions.MODIFY_USER) || CanDo(Actions.DELETE_USER) ? <th className="text-center" scope="col">Más adatát módosíthatja?</th> : ""}
+                        {CanDo(Actions.MODIFY_USER) || CanDo(Actions.DELETE_USER) ?  <th className="text-center" scope="col">Órarend felelős?</th> : ""}
+                        {CanDo(Actions.MODIFY_USER) ? <th className="text-center" scope="col"></th> : ""}
+                        {CanDo(Actions.DELETE_USER) ? <th className="text-center" scope="col"></th> : ""}
                     </tr>
                     {this.state.users.map( user =>  {
                         return(
                             <tr>
-                                {CanDo(Actions.MODIFY_USER || Actions.DELETE_USER) ?  <td>{user.userId}</td> : ""}
-                                <td>{user.name}</td>
-                                <td>{user.email}</td>
-                                {CanDo(Actions.MODIFY_OTHERS_HOLIDAY || Actions.APPROVE_HOLIDAY) ? <td><div><i className="fas fa-calendar-alt">s</i></div></td> : ""}
-                                {CanDo(Actions.MODIFY_USER || Actions.DELETE_USER) ?  <td>{user.dateCreated}</td> : ""}
-                                {CanDo(Actions.MODIFY_USER || Actions.DELETE_USER) ?  <td>{user.dateModified}</td> : ""}
-                                {CanDo(Actions.MODIFY_USER || Actions.DELETE_USER) ?  <td>{user.privileges.szabit_kiirhat ? 'Igen':'Nem'}</td> : ""}
-                                {CanDo(Actions.MODIFY_USER || Actions.DELETE_USER) ?  <td>{user.privileges.biralhat ? 'Igen':'Nem'}</td> : ""}
-                                {CanDo(Actions.MODIFY_USER || Actions.DELETE_USER) ?  <td>{user.privileges.adatot_modosithat ? 'Igen':'Nem'}</td> : ""}
-                                {CanDo(Actions.MODIFY_USER || Actions.DELETE_USER) ?  <td>{user.privileges.orarend_felelos ? 'Igen':'Nem'}</td> : ""}
+                                {CanDo(Actions.MODIFY_USER ) || CanDo( Actions.DELETE_USER) ?  <td className="text-center">{user.userId}</td> : ""}
+                                <td className="text-center">{user.name}</td>
+                                <td className="text-center">{user.email}</td>
+                                {CanDo(Actions.MODIFY_OTHERS_HOLIDAY ) || CanDo(Actions.APPROVE_HOLIDAY) ? <td className="text-center"><div onClick={() => this.handleCalendarClick(user)}><FontAwesomeIcon icon="calendar-alt"/></div></td> : ""}
+                                {CanDo(Actions.MODIFY_USER ) || CanDo( Actions.DELETE_USER) ?  <td className="text-center">{user.dateCreated}</td> : ""}
+                                {CanDo(Actions.MODIFY_USER ) || CanDo( Actions.DELETE_USER) ?  <td className="text-center">{user.dateModified}</td> : ""}
+                                {CanDo(Actions.MODIFY_USER ) || CanDo( Actions.DELETE_USER) ?  <td className="text-center">{user.privileges.szabit_kiirhat ? 'Igen':'Nem'}</td> : ""}
+                                {CanDo(Actions.MODIFY_USER ) || CanDo( Actions.DELETE_USER) ?  <td className="text-center">{user.privileges.biralhat ? 'Igen':'Nem'}</td> : ""}
+                                {CanDo(Actions.MODIFY_USER ) || CanDo( Actions.DELETE_USER) ?  <td className="text-center">{user.privileges.adatot_modosithat ? 'Igen':'Nem'}</td> : ""}
+                                {CanDo(Actions.MODIFY_USER ) || CanDo( Actions.DELETE_USER) ?  <td className="text-center">{user.privileges.orarend_felelos ? 'Igen':'Nem'}</td> : ""}
                                 {CanDo(Actions.MODIFY_USER) ? <td><button type="submit" onClick={() => this.showModify(user)} className="btn btn-secondary" disabled="">Módosít</button></td> : ""}
                                 {CanDo(Actions.DELETE_USER) ? <td><button type="submit" onClick={() => this.showDelete(user)} className="btn btn-danger" disabled="">Töröl</button></td> : ""}
                             </tr>

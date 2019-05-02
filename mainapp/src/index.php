@@ -6,10 +6,10 @@ $user = (object) [
 	'inactive' => False,
     'privileges' => ((object) [
         'superuser' => True,
-        'biralhat' => True,
-        'szabit_kiirhat' => True,
-        'adatot_modosithat' => True,
-        'orarend_felelos' => True,
+        'biralhat' => False,
+        'szabit_kiirhat' => False,
+        'adatot_modosithat' => False,
+        'orarend_felelos' => False,
     ]),
 ];
 ?>
