@@ -55,7 +55,7 @@ const userSpacer = {
         adatot_modosithat: null,
         orarend_felelos: null,
     }
-}
+};
 
 class UserList extends React.Component{
     constructor(props){
@@ -231,6 +231,9 @@ class UserList extends React.Component{
         user.password = e.target.value;
         this.setState({selectedUser: user});
     }
+    handleCalendarClick(){
+
+    }
     render(){
         return(
             <React.Fragment>
@@ -239,32 +242,34 @@ class UserList extends React.Component{
                 </div>
                 <table className="table table-hover">
                     <tr>
-                        <th scope="col">ID</th>
+                        {CanDo(Actions.MODIFY_USER || Actions.DELETE_USER) ? <th scope="col">ID</th> : ""}
                         <th scope="col">Név</th>
                         <th scope="col">Email</th>
-                        <th scope="col">Létrehozva</th>
-                        <th scope="col">Módosítva</th>
-                        <th scope="col">Szabdságot kiírhat?</th>
-                        <th scope="col">Szabadságot bírálhat?</th>
-                        <th scope="col">Más adatát módosíthatja?</th>
-                        <th scope="col">Órarend felelős?</th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
+                        {CanDo(Actions.MODIFY_OTHERS_HOLIDAY || Actions.APPROVE_HOLIDAY) ? <th scope="col"><i className="fas fa-calendar-alt">Naptár</i></th> : ""}
+                        {CanDo(Actions.MODIFY_USER || Actions.DELETE_USER) ? <th scope="col">Létrehozva</th> : ""}
+                        {CanDo(Actions.MODIFY_USER || Actions.DELETE_USER) ? <th scope="col">Módosítva</th> : ""}
+                        {CanDo(Actions.MODIFY_USER || Actions.DELETE_USER) ? <th scope="col">Szabdságot kiírhat?</th> : ""}
+                        {CanDo(Actions.MODIFY_USER || Actions.DELETE_USER) ? <th scope="col">Szabadságot bírálhat?</th> : ""}
+                        {CanDo(Actions.MODIFY_USER || Actions.DELETE_USER) ? <th scope="col">Más adatát módosíthatja?</th> : ""}
+                        {CanDo(Actions.MODIFY_USER || Actions.DELETE_USER) ?  <th scope="col">Órarend felelős?</th> : ""}
+                        {CanDo(Actions.MODIFY_USER) ? <th scope="col"></th> : ""}
+                        {CanDo(Actions.DELETE_USER) ? <th scope="col"></th> : ""}
                     </tr>
                     {this.state.users.map( user =>  {
                         return(
                             <tr>
-                                <td>{user.userId}</td>
+                                {CanDo(Actions.MODIFY_USER || Actions.DELETE_USER) ?  <td>{user.userId}</td> : ""}
                                 <td>{user.name}</td>
                                 <td>{user.email}</td>
-                                <td>{user.dateCreated}</td>
-                                <td>{user.dateModified}</td>
-                                <td>{user.privileges.szabit_kiirhat ? 'Igen':'Nem'}</td>
-                                <td>{user.privileges.biralhat ? 'Igen':'Nem'}</td>
-                                <td>{user.privileges.adatot_modosithat ? 'Igen':'Nem'}</td>
-                                <td>{user.privileges.orarend_felelos ? 'Igen':'Nem'}</td>
-                                <td>{CanDo(Actions.MODIFY_USER) ? <button type="submit" onClick={() => this.showModify(user)} className="btn btn-secondary" disabled="">Módosít</button> : ""}</td>
-                                <td>{CanDo(Actions.DELETE_USER) ? <button type="submit" onClick={() => this.showDelete(user)} className="btn btn-danger" disabled="">Töröl</button> : ""}</td>
+                                {CanDo(Actions.MODIFY_OTHERS_HOLIDAY || Actions.APPROVE_HOLIDAY) ? <td><div><i className="fas fa-calendar-alt">s</i></div></td> : ""}
+                                {CanDo(Actions.MODIFY_USER || Actions.DELETE_USER) ?  <td>{user.dateCreated}</td> : ""}
+                                {CanDo(Actions.MODIFY_USER || Actions.DELETE_USER) ?  <td>{user.dateModified}</td> : ""}
+                                {CanDo(Actions.MODIFY_USER || Actions.DELETE_USER) ?  <td>{user.privileges.szabit_kiirhat ? 'Igen':'Nem'}</td> : ""}
+                                {CanDo(Actions.MODIFY_USER || Actions.DELETE_USER) ?  <td>{user.privileges.biralhat ? 'Igen':'Nem'}</td> : ""}
+                                {CanDo(Actions.MODIFY_USER || Actions.DELETE_USER) ?  <td>{user.privileges.adatot_modosithat ? 'Igen':'Nem'}</td> : ""}
+                                {CanDo(Actions.MODIFY_USER || Actions.DELETE_USER) ?  <td>{user.privileges.orarend_felelos ? 'Igen':'Nem'}</td> : ""}
+                                {CanDo(Actions.MODIFY_USER) ? <td><button type="submit" onClick={() => this.showModify(user)} className="btn btn-secondary" disabled="">Módosít</button></td> : ""}
+                                {CanDo(Actions.DELETE_USER) ? <td><button type="submit" onClick={() => this.showDelete(user)} className="btn btn-danger" disabled="">Töröl</button></td> : ""}
                             </tr>
                         );
                     })}

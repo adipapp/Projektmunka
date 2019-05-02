@@ -2,8 +2,8 @@ import userData from 'userData';
 
 const Privileges = {
     SUPERUSER: [1,2,3,4,5,6],
-    BIRALHAT: [6],
-    SZABIT_KIIRHAT: [5],
+    BIRALHAT: [6,4],
+    SZABIT_KIIRHAT: [5,4],
     ADATOT_MODOSITHAT: [1,2,3,4],
     ORAREND_FELELOS: [],
 };

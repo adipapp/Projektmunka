@@ -49,7 +49,7 @@ class Main extends React.Component{
         }
         if (CanDo(Actions.LIST_USERS)){
             navlinks.push(<li><NavLink to ="/UserList">Felhasználók kezelése</NavLink></li>);
-            routes.push(<Route path ="/UserList" component={() => <UserList targetUser={targetUser}/>}/>);
+            routes.push(<Route path ="/UserList" component={() => <UserList/>}/>);
         }
         return(
             <HashRouter>
@@ -60,11 +60,11 @@ class Main extends React.Component{
                 </div>
                 <div>
                     <ul className="header">
-                        <li><NavLink exact to ="/">home</NavLink></li>
-                        <li><NavLink to ="/Holiday">szabadság</NavLink></li>
+                        <li><NavLink exact to ="/">Home</NavLink></li>
+                        <li><NavLink to ="/Holiday">Szabadság</NavLink></li>
                         {navlinks}
                         <li><NavLink to ="#">Saját adatok módosítása</NavLink></li>
-                        <li><NavLink to ="#" style={{float:'right'}}>kilépés</NavLink></li>
+                        <li><NavLink to ="#" style={{float:'right'}}>Kilépés</NavLink></li>
                     </ul>
                     <Route exact path ="/" component={() => <Homepage name={userData.user.name}/>}/>
                     <Route path ="/Holiday" component={() => <Calendar targetUser={targetUser}/>}/>
