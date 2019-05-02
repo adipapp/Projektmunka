@@ -2,7 +2,8 @@
 $user = (object) [
     'userId' => 3,
     'name' => 'Kiss Pista',
-    'email' => 'kiss@sze.hu',
+	'email' => 'kiss@sze.hu',
+	'inactive' => False,
     'privileges' => ((object) [
         'superuser' => True,
         'biralhat' => True,

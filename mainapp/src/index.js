@@ -3,36 +3,22 @@ import ReactDOM from 'react-dom';
 import {Route, NavLink, HashRouter} from 'react-router-dom';
 import $ from 'jquery';
 import Calendar from './js/calendar.js';
-import Homepage from './js/homepage';
+import Homepage from './js/homepage.js';
+import UserList from "./js/userlist";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'jquery/dist/jquery.min.js';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import './css/mainapp.scss';
 
 import userData from 'userData';
+import {CanDo, Actions} from "./js/privileges";
 
 /* globals __webpack_public_path__ */
 __webpack_public_path__ = `${window.STATIC_URL}/mainapp/src/`;
 
-const Privileges = {
-    SUPERUSER: [],
-    BIRALHAT: [],
-    SZABIT_KIIRHAT: [],
-    ADATOT_MODOSITHAT: [],
-    ORAREND_FELELOS: [],
-};
-const Actions = {
-
-};
-const Views = {
-    USERLIST: 1,
-    HOLIDAY: 2,
-    HOLIDAYAPPROVE: 3,
-};
 function dateToString(date){
     return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
 }
-var CurrentView;
 
 function getISODayNumber(dt) {
     return (dt.getDay() === 0 ? 6 : dt.getDay()-1);
@@ -40,9 +26,9 @@ function getISODayNumber(dt) {
 function GetUserData(){
 
 }
-function CanDo(action){
 
-}
+var targetUser = null;
+
 class Main extends React.Component{
     constructor(){
         super();
@@ -50,7 +36,21 @@ class Main extends React.Component{
     componentDidMount(){
 
     }
+    renderRoutes(){
+        let routes = [];
+
+    }
     render(){
+        let navlinks = [];
+        let routes = [];
+        if (CanDo(Actions.APPROVE_HOLIDAY)){
+            navlinks.push(<li><NavLink to ="/ApproveList">Jóváhagyás</NavLink></li>);
+            routes.push(<Route exact path ="/ApproveList" component={<div/>}/>);
+        }
+        if (CanDo(Actions.LIST_USERS)){
+            navlinks.push(<li><NavLink to ="/UserList">Felhasználók kezelése</NavLink></li>);
+            routes.push(<Route path ="/UserList" component={() => <UserList targetUser={targetUser}/>}/>);
+        }
         return(
             <HashRouter>
                 <div className="topheader">
@@ -61,13 +61,14 @@ class Main extends React.Component{
                 <div>
                     <ul className="header">
                         <li><NavLink exact to ="/">home</NavLink></li>
-                        <li><NavLink to ="/asd">szabadság</NavLink></li>
-                        <li><NavLink to ="#">Felhasználók kezelése</NavLink></li>
+                        <li><NavLink to ="/Holiday">szabadság</NavLink></li>
+                        {navlinks}
                         <li><NavLink to ="#">Saját adatok módosítása</NavLink></li>
                         <li><NavLink to ="#" style={{float:'right'}}>kilépés</NavLink></li>
                     </ul>
                     <Route exact path ="/" component={() => <Homepage name={userData.user.name}/>}/>
-                    <Route path ="/asd" component={() => <Calendar user={userData}/>}/>
+                    <Route path ="/Holiday" component={() => <Calendar targetUser={targetUser}/>}/>
+                    {routes}
                 </div>
             </HashRouter>
         );

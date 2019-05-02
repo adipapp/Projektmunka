@@ -1,6 +1,7 @@
-import React from 'react'
-import $ from 'jquery'
-import Dropdown from './dropdown.js'
+import React from 'react';
+import $ from 'jquery';
+import Dropdown from './dropdown.js';
+import Cando from './privileges.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'jquery/dist/jquery.min.js';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
@@ -228,8 +229,16 @@ class Calendar extends React.Component{
     loadData(date){
         let endDate = new Date(date);
         endDate.setDate(endDate.getDate() + 42);
+        let targetUser;
+        if (this.props.targetUser != undefined){
+            targetUser = this.props.targetUser;
+        }
+        else{
+            let targetUser = userData;
+        }
         const data = {
-            userData: userData,
+            requestUser: userData,
+            targetUser: null,
             requestType: "getCalendarData",
             dateFrom: this.dateToStringDateOnly(date),
             dateTo: this.dateToStringDateOnly(endDate)
