@@ -60,9 +60,11 @@ class Main extends React.Component{
                         <li><NavLink to ="#">Saját adatok módosítása</NavLink></li>
                         <li><NavLink to ="#" style={{float:'right'}}>Kilépés</NavLink></li>
                     </ul>
-                    <Route exact path ="/" component={() => <Homepage name={userData.user.name}/>}/>
-                    <Route path ="/Holiday" component={() => <Calendar/>}/>
-                    {routes}
+                    <div className="leftcolumn">
+                        <Route exact path ="/" component={() => <Homepage name={userData.user.name}/>}/>
+                        <Route path ="/Holiday" component={() => <Calendar/>}/>
+                        {routes}
+                    </div>
                 </div>
             </HashRouter>
         );

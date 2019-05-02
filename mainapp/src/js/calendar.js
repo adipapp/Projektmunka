@@ -361,7 +361,7 @@ class Calendar extends React.Component{
                         <button type="button" className="btn btn-secondary" onClick={() => this.monthChange("right")}>-&gt;</button>
                     </div>
                     <div >
-                        
+
                     </div>
                     <div className="calendar-header-center">{this.state.selectedDate.getFullYear()+ " " + months[this.state.selectedDate.getMonth()]}</div>
                     <div>
