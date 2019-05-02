@@ -83,7 +83,7 @@ function getSelectedItemByValue(options, value){
 }
 class CalendarElement extends React.Component{
     isDayDisabled(){
-        if (this.props.actualDate.getMonth() !== this.props.selectedDate.getMonth() || getISODayNumber(this.props.actualDate) > 4){
+        if (this.props.actualDate.getMonth() !== this.props.selectedDate.getMonth() || getISODayNumber(this.props.actualDate) > 4 || (!CanDo(Actions.MODIFY_OTHERS_HOLIDAY) && TargetUser != null)){
             return true;
         }
         return false;
