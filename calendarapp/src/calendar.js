@@ -1,14 +1,11 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import $ from 'jquery';
-import Dropdown from './dropdown.js';
-import {CanDo, Actions, TargetUser, SetTargetUser} from './privileges.js';
+import Dropdown from './js/dropdown.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'jquery/dist/jquery.min.js';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
-import '../css/calendar.scss'
-
-import userData from 'userData';
-
+import './css/calendar.scss'
 
 const dropdownOptions = [
     {label: "Válassz", value: 0},
@@ -83,22 +80,13 @@ function getSelectedItemByValue(options, value){
 }
 class CalendarElement extends React.Component{
     isDayDisabled(){
-        if (this.props.actualDate.getMonth() !== this.props.selectedDate.getMonth() || getISODayNumber(this.props.actualDate) > 4 || (!CanDo(Actions.MODIFY_OTHERS_HOLIDAY) && TargetUser != null)){
+        if (this.props.actualDate.getMonth() !== this.props.selectedDate.getMonth() || getISODayNumber(this.props.actualDate) > 4 || this.props.selected.approved == 10){
             return true;
         }
         return false;
     }
-    handleCostChange(e){
-        this.props.costChanged(this.props.index, e.target.value);
-    }
     render(){
         const disabled = this.isDayDisabled();
-        let isTravel = false;
-        for (let i = 0; i < dropdownOptions[2].options.length; i++){
-            if (dropdownOptions[2].options[i] == this.props.selected.option) {
-                isTravel = true;
-            }
-        }
         return(
             <div className={disabled ? "calendar-day font-grey" : "calendar-day"}>
                 <div className="calendar-day-number">{this.props.actualDate.getDate()}</div>
@@ -109,7 +97,6 @@ class CalendarElement extends React.Component{
                     selectionChanged={(index, data) =>this.props.selectionChanged(index, data)}
                     selected={this.props.selected.option}
                     approved={this.props.selected.approved}/>
-                {isTravel ? <input type="number" className="form-control" value={this.props.selected.cost} onChange={this.handleCostChange.bind(this)}/> : ""}
             </div>
         );
     }
@@ -119,7 +106,6 @@ const exampleState = {
     approved: false,
     option: null,
     isTravel: false,
-    cost: 0,
 };
 class Calendar extends React.Component{
     constructor(props){
@@ -132,7 +118,7 @@ class Calendar extends React.Component{
             calendarFirstDay: cfd,
             selectedDate: sd,
             selectedStates: [],
-            originalState: [],
+            originalStates: [],
         };
         for(let i = 0; i < 42; i++){
             this.state.selectedStates.push({
@@ -140,7 +126,12 @@ class Calendar extends React.Component{
                 approved: null,
                 option: dropdownOptions[0],
                 isTravel: false,
-                cost: 0,
+            });
+            this.state.originalStates.push({
+                date: null,
+                approved: null,
+                option: dropdownOptions[0],
+                isTravel: false,
             });
         }
     }
@@ -159,28 +150,30 @@ class Calendar extends React.Component{
                     key={'calendar-element-' + i}
                     selected={this.state.selectedStates[i]}
                     selectionChanged={(index, data) => this.selectionChanged(index, data)}
-                    costChanged={(index, data) => this.handleCostChange(index, data)}
                 />
             );
             d.setDate(d.getDate()+1);
         }
         return dayDivs;
     }
-    handleCostChange(index, value){
-        const state = this.state.selectedStates.slice();
-        state[index].cost = value;
-        this.setState({selectedStates: state});
+    getIsTravel(option){
+        let isTravel = false;
+        for (let i = 0; i < dropdownOptions[2].options.length; i++){
+            if (dropdownOptions[2].options[i] == option) {
+                isTravel = true;
+            }
+        }
+        return isTravel;
     }
     selectionChanged(index, value){
         const state = this.state.selectedStates.slice();
         state[index].option = value;
+        state[index].isTravel = this.getIsTravel(value);
         if (value == dropdownOptions[0]){
             state[index].approved = null;
-            state[index].cost = 0;
         }
-        else if (this.state.originalState[index].option == value && value != dropdownOptions[0]){
-            state[index].approved = this.state.originalState[index].approved;
-            state[index].cost = this.state.originalState[index].cost;
+        else if (this.state.originalStates[index].option == value && value != dropdownOptions[0]){
+            state[index].approved = this.state.originalStates[index].approved;
         }
         else if (value != dropdownOptions[0]){
             state[index].approved = 0;
@@ -247,18 +240,8 @@ class Calendar extends React.Component{
     }
     loadData(date){
         let endDate = new Date(date);
-        endDate.setDate(endDate.getDate() + 42);
-        let targetUser = null;
-        if (this.props.targetUser != null && CanDo(Actions.APPROVE_HOLIDAY) || CanDo(Actions.MODIFY_OTHERS_HOLIDAY)){
-            targetUser = TargetUser;
-        }
-        else{
-            let targetUser = userData;
-        }
+        endDate.setDate(endDate.getDate() + 41);
         const data = {
-            requestUser: userData,
-            targetUser: null,
-            requestType: "getCalendarData",
             dateFrom: this.dateToStringDateOnly(date),
             dateTo: this.dateToStringDateOnly(endDate)
         };
@@ -273,7 +256,6 @@ class Calendar extends React.Component{
                 approved: null,
                 option: dropdownOptions[0],
                 isTravel: false,
-                cost: 0,
             });
         }
         for (let i = 0; i < 42; i++){
@@ -284,15 +266,15 @@ class Calendar extends React.Component{
                 approved: null,
                 option: dropdownOptions[0],
                 isTravel: false,
-                cost: 0,
             });
         }
         $.ajax({
             type:"POST",
-            url: "http://localhost/getData.php",
+            url: "http://adampapp.ddns.net/projektmunka/szabadsagleker",
             data: {data:data},
             success: function (data) {
                 const returnData = JSON.parse(data);
+                console.log(returnData)
                 for (let i = 0; i < returnData.length; i++){
                     const d = new Date(Date.parse(returnData[i].date));
                     state[Math.floor((d-cfd)/1000/60/60/24)] = {
@@ -300,17 +282,15 @@ class Calendar extends React.Component{
                         approved: returnData[i].approved,
                         option: getSelectedItemByValue(dropdownOptions, returnData[i].optionValue),
                         isTravel: returnData[i].isTravel,
-                        cost: returnData[i].cost,
                     };
                     ostate[Math.floor((d-cfd)/1000/60/60/24)] = {
                         date: d,
                         approved: returnData[i].approved,
                         option: getSelectedItemByValue(dropdownOptions, returnData[i].optionValue),
                         isTravel: returnData[i].isTravel,
-                        cost: returnData[i].cost,
                     };
                 }
-                this.setState({selectedStates: state, originalState: ostate});
+                this.setState({selectedStates: state, originalStates: ostate});
             }.bind(this),
             error: function (data) {
                 console.log("error");
@@ -321,33 +301,48 @@ class Calendar extends React.Component{
     saveData(){
         let data = [];
         for (let i = 0; i < 42; i++) {
-            if (this.compareStates(this.state.originalState[i], this.state.selectedStates[i])) {
+            if (this.state.originalStates[i].option == this.state.selectedStates[i].option) {
                 continue;
             }
             let dt = new Date(this.state.calendarFirstDay);
             dt.setDate(dt.getDate() + i);
-            const dateString = dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate();
-            data.push({
-                date:  dateString,
-                value: this.state.selectedStates[i].value,
-            });
+            const dateString = this.dateToStringDateOnly(dt);
+            if (this.state.selectedStates[i].option == dropdownOptions[0]) {
+                data.push({
+                    date:  dateString,
+                    approved: 0,
+                    optionValue: this.state.selectedStates[i].option.value,
+                    isTravel: this.state.originalStates[i].isTravel
+                });
+            }
+            else{
+                data.push({
+                    date:  dateString,
+                    approved: this.state.selectedStates[i].approved,
+                    optionValue: this.state.selectedStates[i].option.value,
+                    isTravel: this.state.selectedStates[i].isTravel
+                });
+            }
         }
+        console.log(data);
         $.ajax({
             type:"POST",
-            url: "http://localhost/save.php",
-            data: {data: data},
+            url: "http://adampapp.ddns.net/projektmunka/szabadsag",
+            data: {data: {szabadsag: data}},
             success: function (data) {
                 console.log("success");
                 console.log(data);
-            },
+                this.loadData(this.state.calendarFirstDay);
+            }.bind(this),
             error: function (data) {
                 console.log("error");
                 console.log(data);
-            }
+                this.loadData(this.state.calendarFirstDay);
+            }.bind(this)
         });
     }
     compareStates(original, current){
-        if (original.date == current.date && original.approved == current.approved && original.option == current.option && original.isTravel == current.isTravel && original.cost == current.cost ) {
+        if (original.date == current.date && original.approved == current.approved && original.option == current.option && original.isTravel == current.isTravel) {
             return true;
         }
         return false;
@@ -400,4 +395,8 @@ class Calendar extends React.Component{
         );
     }
 }
-export default Calendar;
+
+ReactDOM.render(
+    <Calendar/>,
+    document.getElementById('root')
+);

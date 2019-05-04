@@ -4,7 +4,9 @@
     <bookmark url="file://$PROJECT_DIR$/src/js/userlist.js" line="269" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="616892c9-5c5f-4ab2-a5e1-ba0d313cabda" name="Default Changelist" comment="" />
+    <list default="true" id="616892c9-5c5f-4ab2-a5e1-ba0d313cabda" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -16,28 +18,22 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1058">
-              <caret line="58" column="34" lean-forward="true" selection-start-line="58" selection-start-column="34" selection-end-line="58" selection-end-column="34" />
-              <folding>
-                <element signature="e#0#26#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="12">
+              <caret line="8" column="35" lean-forward="true" selection-start-line="8" selection-start-column="35" selection-end-line="8" selection-end-column="35" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/js/calendar.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="437">
-              <caret line="99" column="13" lean-forward="true" selection-start-line="99" selection-start-column="13" selection-end-line="99" selection-end-column="13" />
+            <state relative-caret-position="2875">
+              <caret line="125" column="21" lean-forward="true" selection-start-line="125" selection-start-column="21" selection-end-line="125" selection-end-column="21" />
               <folding>
-                <element signature="e#0#25#0" expanded="true" />
-                <element signature="e#859#963#0" />
-                <element signature="e#980#1165#0" />
-                <element signature="n#!!block;n#componnentDidMount#0;n#Calendar#0" />
+                <element signature="e#0#26#0" expanded="true" />
                 <element signature="n#!!block;n#renderSUM#0;n#Calendar#0" />
                 <element signature="n#!!block;n#dateToString#0;n#Calendar#0" />
                 <element signature="n#!!block;n#dateToStringDateOnly#0;n#Calendar#0" />
@@ -49,22 +45,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/js/userlist.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-681">
+            <state relative-caret-position="1265">
               <caret line="69" column="21" selection-start-line="69" selection-start-column="21" selection-end-line="69" selection-end-column="21" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
                 <element signature="n#!!block;n#loadData#0;n#UserList#0" />
                 <element signature="n#!!block;n#deepCopyUser#0;n#UserList#0" />
                 <element signature="n#!!block;n#showDelete#0;n#UserList#0" />
-                <element signature="n#!!block;n#handleClose#0;n#UserList#0" />
                 <element signature="n#!!block;n#saveDelete#0;n#UserList#0" />
-                <element signature="n#!!block;n#showDelete#1;n#UserList#0" />
-                <element signature="n#!!block;n#hideDelete#1;n#UserList#0" />
-                <element signature="n#!!block;n#saveMidify#0;n#UserList#0" />
                 <element signature="n#!!block;n#showNew#0;n#UserList#0" />
                 <element signature="n#!!block;n#hideNew#0;n#UserList#0" />
                 <element signature="n#!!block;n#saveNew#0;n#UserList#0" />
-                <element signature="e#4606#5294#0" />
               </folding>
             </state>
           </provider>
@@ -91,7 +82,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/css/calendar.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1292">
+            <state relative-caret-position="1357">
               <caret line="59" column="66" selection-start-line="59" selection-start-column="66" selection-end-line="59" selection-end-column="66" />
             </state>
           </provider>
@@ -174,7 +165,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -208,6 +198,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -282,12 +273,14 @@
       <workItem from="1556700093954" duration="213000" />
       <workItem from="1556700398610" duration="4487000" />
       <workItem from="1556705687272" duration="3632000" />
-      <workItem from="1556710810469" duration="61303000" />
+      <workItem from="1556710810469" duration="62039000" />
+      <workItem from="1556915260361" duration="599000" />
+      <workItem from="1556952785159" duration="778000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="118440000" />
+    <option name="totallyTimeSpent" value="120553000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -306,8 +299,8 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50052685" side_tool="true" visible="true" weight="0.0981048" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="10" sideWeight="0.49947312" visible="true" weight="0.0981048" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5015806" side_tool="true" visible="true" weight="0.0981048" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="10" sideWeight="0.49841937" visible="true" weight="0.0981048" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -392,24 +385,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/js/approve.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/js/approve.js" />
     <entry file="jar://$APPLICATION_HOME_DIR$/lib/platform-impl.jar!/resources/html5-schema/html5/tables.rnc">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="437">
           <caret line="232" column="16" selection-start-line="232" selection-start-column="16" selection-end-line="232" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/css/calendar.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1292">
-          <caret line="59" column="66" selection-start-line="59" selection-start-column="66" selection-end-line="59" selection-end-column="66" />
         </state>
       </provider>
     </entry>
@@ -423,31 +403,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/js/privileges.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="10" column="28" selection-start-line="10" selection-start-column="28" selection-end-line="10" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/js/userlist.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-681">
+        <state relative-caret-position="1265">
           <caret line="69" column="21" selection-start-line="69" selection-start-column="21" selection-end-line="69" selection-end-column="21" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
             <element signature="n#!!block;n#loadData#0;n#UserList#0" />
             <element signature="n#!!block;n#deepCopyUser#0;n#UserList#0" />
             <element signature="n#!!block;n#showDelete#0;n#UserList#0" />
-            <element signature="n#!!block;n#handleClose#0;n#UserList#0" />
             <element signature="n#!!block;n#saveDelete#0;n#UserList#0" />
-            <element signature="n#!!block;n#showDelete#1;n#UserList#0" />
-            <element signature="n#!!block;n#hideDelete#1;n#UserList#0" />
-            <element signature="n#!!block;n#saveMidify#0;n#UserList#0" />
             <element signature="n#!!block;n#showNew#0;n#UserList#0" />
             <element signature="n#!!block;n#hideNew#0;n#UserList#0" />
             <element signature="n#!!block;n#saveNew#0;n#UserList#0" />
-            <element signature="e#4606#5294#0" />
           </folding>
         </state>
       </provider>
@@ -459,29 +427,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/index.js">
+    <entry file="file://$PROJECT_DIR$/src/js/privileges.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1058">
-          <caret line="58" column="34" lean-forward="true" selection-start-line="58" selection-start-column="34" selection-end-line="58" selection-end-column="34" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="230">
+          <caret line="10" column="28" selection-start-line="10" selection-start-column="28" selection-end-line="10" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/css/calendar.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1357">
+          <caret line="59" column="66" selection-start-line="59" selection-start-column="66" selection-end-line="59" selection-end-column="66" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/js/calendar.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="99" column="13" lean-forward="true" selection-start-line="99" selection-start-column="13" selection-end-line="99" selection-end-column="13" />
+        <state relative-caret-position="2875">
+          <caret line="125" column="21" lean-forward="true" selection-start-line="125" selection-start-column="21" selection-end-line="125" selection-end-column="21" />
           <folding>
-            <element signature="e#0#25#0" expanded="true" />
-            <element signature="e#859#963#0" />
-            <element signature="e#980#1165#0" />
-            <element signature="n#!!block;n#componnentDidMount#0;n#Calendar#0" />
+            <element signature="e#0#26#0" expanded="true" />
             <element signature="n#!!block;n#renderSUM#0;n#Calendar#0" />
             <element signature="n#!!block;n#dateToString#0;n#Calendar#0" />
             <element signature="n#!!block;n#dateToStringDateOnly#0;n#Calendar#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="12">
+          <caret line="8" column="35" lean-forward="true" selection-start-line="8" selection-start-column="35" selection-end-line="8" selection-end-column="35" />
         </state>
       </provider>
     </entry>
