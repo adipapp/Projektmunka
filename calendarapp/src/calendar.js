@@ -80,19 +80,21 @@ function getSelectedItemByValue(options, value){
 }
 class CalendarElement extends React.Component{
     isDayDisabled(){
-        if (this.props.actualDate.getMonth() !== this.props.selectedDate.getMonth() || getISODayNumber(this.props.actualDate) > 4 || this.props.selected.approved == 10){
+        if (this.props.actualDate.getMonth() !== this.props.selectedDate.getMonth() || getISODayNumber(this.props.actualDate) > 4 || this.props.selected.approved == 1){
             return true;
         }
         return false;
     }
     render(){
         const disabled = this.isDayDisabled();
+        const rejected = this.props.selected.approved == 2 ? true : false;
         return(
             <div className={disabled ? "calendar-day font-grey" : "calendar-day"}>
                 <div className="calendar-day-number">{this.props.actualDate.getDate()}</div>
                 <Dropdown
                     index={this.props.index}
                     disabled={disabled}
+                    rejected={rejected}
                     options={dropdownOptions}
                     selectionChanged={(index, data) =>this.props.selectionChanged(index, data)}
                     selected={this.props.selected.option}
@@ -274,7 +276,7 @@ class Calendar extends React.Component{
             data: {data:data},
             success: function (data) {
                 const returnData = JSON.parse(data);
-                console.log(returnData)
+                //console.log(returnData)
                 for (let i = 0; i < returnData.length; i++){
                     const d = new Date(Date.parse(returnData[i].date));
                     state[Math.floor((d-cfd)/1000/60/60/24)] = {
@@ -324,7 +326,7 @@ class Calendar extends React.Component{
                 });
             }
         }
-        console.log(data);
+        //console.log(data);
         $.ajax({
             type:"POST",
             url: "http://adampapp.ddns.net/projektmunka/szabadsag",

@@ -8,11 +8,20 @@ class Dropdown extends React.Component{
         let optionTags = [];
         for(let i = 0; i < options.length; i++){
             if ("options" in options[i]){
-                optionTags.push(
-                    <optgroup label={options[i].label}>
-                        {this.renderOptions(options[i].options)}
-                    </optgroup>
-                );
+                if (options[i].label == 'Szabadság' && this.props.rejected) {
+                    optionTags.push(
+                        <optgroup disabled label={options[i].label}>
+                            {this.renderOptions(options[i].options)}
+                        </optgroup>
+                    );
+                }
+                else {
+                    optionTags.push(
+                        <optgroup label={options[i].label}>
+                            {this.renderOptions(options[i].options)}
+                        </optgroup>
+                    );
+                }
             }
             else{
                 optionTags.push(
@@ -41,15 +50,27 @@ class Dropdown extends React.Component{
         }
         return null;
     }
+    getIsTravel(option){
+        let isTravel = false;
+        for (let i = 0; i < this.props.options[2].options.length; i++){
+            if (this.props.options[2].options[i] == option) {
+                isTravel = true;
+            }
+        }
+        return isTravel;
+    }
     render(){
         let bgColor;
-        if (this.props.approved == 1 || this.props.approved == 10){
+        if (this.props.approved == 1){
             bgColor = "#90ee90";
         } else if (this.props.approved == 0){
             bgColor = "#ffff90";
         }
         else if (this.props.approved == 2){
             bgColor = "#ff594f"
+        }
+        if (this.getIsTravel(this.props.selected)){
+            bgColor = "#89a8ff"
         }
         if (this.props.disabled) {
             return(
