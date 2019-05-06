@@ -14,22 +14,22 @@ const dropdownOptions = [
     {
         label: "Szabadság",
         options: [
-            {label: "F", value: 1},
-            {label: "E", value: 2},
-            {label: "T", value: 3},
-            {label: "J", value: 4},
-            {label: "I", value: 5},
-            {label: "B", value: 6},
-            {label: "H", value: 7},
-            {label: "A", value: 8}
+            {label: "Fizetett", value: 1},
+            {label: "Fezetett előzőévei", value: 2},
+            {label: "Tanulmányi", value: 3},
+            {label: "Jutalom", value: 4},
+            {label: "Fizetés nélküli", value: 5},
+            {label: "Betegség", value: 6},
+            {label: "Igazolatlan", value: 7},
+            {label: "Apanap", value: 8}
         ]
     },
     {
         label: "Utazás",
         options: [
-            {label: "E", value: 9},
-            {label: "EE", value: 10},
-            {label: "K", value: 11},
+            {label: "Egyéni-1 út", value: 9},
+            {label: "Egyéni-2 út", value: 10},
+            {label: "Közösségi", value: 11},
         ]
     }
 ];
