@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 import Dropdown from './js/dropdown.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'jquery/dist/jquery.min.js';
@@ -80,7 +82,7 @@ function getSelectedItemByValue(options, value){
 }
 class CalendarElement extends React.Component{
     isDayDisabled(){
-        if (this.props.actualDate.getMonth() !== this.props.selectedDate.getMonth() || getISODayNumber(this.props.actualDate) > 4 || this.props.selected.approved == 1){
+        if (this.props.actualDate.getMonth() !== this.props.selectedDate.getMonth() || getISODayNumber(this.props.actualDate) > 4 || this.props.selected.approved == 1 || this.props.selected.approved == 10){
             return true;
         }
         return false;
@@ -139,6 +141,18 @@ class Calendar extends React.Component{
     }
     componentDidMount(){
         this.loadData(this.state.calendarFirstDay);
+    }
+    createNotification(type, message = "", title = "", timeout = 5000){
+        switch (type) {
+            case 'info':
+                return NotificationManager.info(message, title, timeout);
+            case 'success':
+                return NotificationManager.success(message, title, timeout);
+            case 'warning':
+                return NotificationManager.warning(message, title, timeout);
+            case 'error':
+                return NotificationManager.error(message, title, timeout);
+        }
     }
     createTable() {
         let dayDivs = [];
@@ -327,6 +341,7 @@ class Calendar extends React.Component{
             }
         }
         //console.log(data);
+        this.createNotification("info", "Mentés folyamatban!");
         $.ajax({
             type:"POST",
             url: "http://adampapp.ddns.net/projektmunka/szabadsag",
@@ -334,11 +349,13 @@ class Calendar extends React.Component{
             success: function (data) {
                 console.log("success");
                 console.log(data);
+                this.createNotification("success", "Sikeres mentés!");
                 this.loadData(this.state.calendarFirstDay);
             }.bind(this),
             error: function (data) {
                 console.log("error");
                 console.log(data);
+                this.createNotification("error", "Sikertelen mentés!");
                 this.loadData(this.state.calendarFirstDay);
             }.bind(this)
         });
@@ -393,6 +410,7 @@ class Calendar extends React.Component{
                     </div>
                     {this.renderSUM()}
                 </div>
+                <NotificationContainer/>
             </div>
         );
     }
